@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.1/cerulean/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+  <div th:replace="~{/fagment/header.html :: headerFragment}"></div>
+
+  <div class="container-fluid">
+
+    <!-- 제목 -->
+    <div class="row mt-4">
+      <div class="col-md-10 offset-md-1">
+        <h1 th:text="${board.id}"></h1>
+        <h2 th:text="${board.id}" class="text-secondary"></h2>
+      </div>
+    </div>
+
+    <!-- 게시글 정보표시자리 -->
+    <div class="row mt-4">
+      <div class="col-md-10 offset-md-1">
+        <div class="row">
+          <div class="col-6 text-start">
+            <i class="fa-solid fa-eye"></i> <span class="ms-1">${board.readcount}</span>
+            <span class="ms-4 text-secondary" th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"}></span>
+          </div>
+          <div class="col-6 text-end">
+            <i class="ms-2 fa-regular fa-bookmark"></i>
+            <i class="ms-2 fa-solid fa-share-nodes"></i>
+            <i class="ms-2 fa-regular fa-share-from-square"></i>
+          </div>
+        </div>
+
+        <hr>
+      </div>
+    </div>
+
+
+
+    <!-- 게시글 내용 -->
+    <div class="row mt-4" style="min-height:350px;">
+      <div class="col-md-10 offset-md-1" th:utext="${board.content}"></div>
+    </div>
+
+    <!-- 버튼 영역 -->
+    <div class="row mt-4">
+      <div class="col-md-10 offset-md-1 text-end">
+        <hr>
+
+        <!-- 글쓰기와 다르게 답글쓰기는 계산을 위해 원본글의 번호를 전달해야함 -->
+        <a href="write" class="btn btn-primary">글쓰기</a>
+        <a href="write?no=${board.no}" class="btn btn-success">답글쓰기</a>
+
+        <!--
+            수정과 삭제가 password 페이지를 거쳐서 갈 수 있도록 링크 수정
+            - 주소는 /password/edit 또는 delete/번호 형태로 경로 변수 처리
+        -->
+        <a href="password/edit/${board.no}" class="btn btn-warning">수정</a>
+        <a href="password/delete/${board.no}" class="btn btn-danger">삭제</a>
+        <a href="./" class="btn btn-dark">목록</a>
+      </div>
+    </div>
+
+    <!-- 댓글 표시 영역 -->
+    <div class="row mt-4">
+      <div class="col-md-10 offset-md-1">
+        5,000개의 댓글이 있습니다
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-10 offset-md-1">
+        <form action="??" method="post">
+          <textarea name="?" class="form-control" rows="4" style="resize: none;"></textarea>
+          <button type="submit" class="btn btn-primary w-100 mt-3">등록</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-10 offset-md-1">
+        <hr>
+        <h5 class="text-dark">작성자</h5>
+        <h6 class="text-secondary">
+          ?분 전
+          <i class="ms-4 fa-regular fa-thumbs-up text-danger"></i>
+          <span class="text-danger">500</span>
+        </h6>
+        <pre class="mt-3" style="min-height:75px;">테스트 댓글 영역</pre>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-10 offset-md-1">
+        <hr>
+        <h5 class="text-dark">작성자</h5>
+        <h6 class="text-secondary">
+          ?분 전
+          <i class="ms-4 fa-regular fa-thumbs-up text-danger"></i>
+          <span class="text-danger">500</span>
+        </h6>
+        <pre class="mt-3" style="min-height:75px;">테스트 댓글 영역</pre>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-10 offset-md-1">
+        <hr>
+        <h5 class="text-dark">작성자</h5>
+        <h6 class="text-secondary">
+          ?분 전
+          <i class="ms-4 fa-regular fa-thumbs-up text-danger"></i>
+          <span class="text-danger">500</span>
+        </h6>
+        <pre class="mt-3" style="min-height:75px;">테스트 댓글 영역</pre>
+      </div>
+    </div>
+  </div>
+  <div th:replace="~{/fagment/footer.html :: footerFragment}"></div>
+</body>
+</html>

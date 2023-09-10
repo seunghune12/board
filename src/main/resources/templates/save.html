@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>save</title>
+</head>
+<body>
+
+<form action="/board/save" method="post" enctype="multipart/form-data">
+
+
+    <div th:if="${param.id != null}">
+        <input type="hidden" name="id" th:value="${param.id}" />
+    </div>
+
+
+    pass: <input type="text" name="boardPass"> <br>
+    title: <input type="text" name="boardTitle"> <br>
+    contents: <textarea name="boardContents" cols="30" rows="10"></textarea> <br>
+    file: <input type="file" name="boardFile"> <br>
+    <input type="submit" value="글작성">
+</form>
+
+</body>
+</html>

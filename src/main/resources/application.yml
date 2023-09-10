@@ -1,0 +1,49 @@
+# ?? ?? ??
+server:
+  port: 8080
+
+
+
+# database ?? ??
+spring:
+  profiles:
+    include: oauth
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 846341603365-tdv8pb9tfot9nci884timt9fj3hgldpt.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 1111
+  thymeleaf:
+    cache: false
+
+  # spring data jpa ??
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+   #logging level
+  logging:
+    level:
+      org.springframework: INFO
+      org.zerock: DEBUG
+      org.springframework.security: TRACE
+
+
+  jwt:
+    token:
+      secret: "secretKey"
+
+
