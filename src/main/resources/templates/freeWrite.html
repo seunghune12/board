@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>게시판 만들기</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.1/cerulean/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <!--header-->
+    <div th:replace="~{/fagment/header.html :: headerFragment}"></div>
+
+    <!--container-->
+    <div class="container-fluid">
+
+      <div class="row mt-4">
+        <div class="col-md-10 offset-md-1">
+          <h1>게시글 작성</h1>
+        </div>
+      </div>
+
+
+      <form method="post" class="board-form">
+
+        <div th:if="${user != null}">
+          <input type="hidden" name="id" th:value="${user.username}" />
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-10 offset-md-1">
+            <div class="form-floating">
+              <input name="title" type="text" class="form-control" placeholder="제목" required>
+              <label class="form-label text-secondary">제목</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-10 offset-md-1">
+            <textarea name="content" class="form-control" rows="15" placeholder="내용 작성" required></textarea>
+          </div>
+        </div>
+
+
+        <div class="row mt-4">
+          <div class="col-md-10 offset-md-1 text-end">
+            <a href="./" type="button" class="btn btn-secondary btn-lg">목록</a>
+            <button type="submit" class="btn btn-primary btn-lg">등록</button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+    <!--footer-->
+    <div th:replace="~{/fagment/footer.html :: footerFragment}"></div>
+
+  </body>
+</html>

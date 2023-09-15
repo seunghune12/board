@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.entity.UserEntity;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +23,32 @@ public class UserController {
     public String login(){
         return "login";
     }
-
-    @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody UserDTO userDTO){
-        return ResponseEntity.ok().body(userService.login(userDTO));
-    }
+//
+//    @PostMapping("login")
+//    public UserEntity login(@RequestBody UserDTO userDTO){
+//        UserEntity user = userService.login(userDTO);
+//        return user;
+//    }
 
     @GetMapping("/join")
     public String join()  {
         return "join";  }
 
     @PostMapping("/join")
-    public ResponseEntity<String> join(@RequestBody UserDTO userDTO){
+    public ResponseEntity<String> join(@ModelAttribute UserDTO userDTO){
         userDTO.setRole("USER");
         String rawPassword = userDTO.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         userDTO.setPassword(encPassword);
         userService.join(userDTO);
         return ResponseEntity.ok().body("회원가입이 성공 했습니다.");
+    }
+
+
+
+    @GetMapping(value = "/exception")
+    public void exceptionTest() throws RuntimeException{
+        throw new RuntimeException("접근 실패!");
     }
 
 

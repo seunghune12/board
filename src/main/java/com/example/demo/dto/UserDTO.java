@@ -27,7 +27,7 @@ public class UserDTO {
         userDTO.setUsername(userEntity.getUsername());
         userDTO.setPassword(userEntity.getPassword());
         userDTO.setEmail(userEntity.getEmail());
-        userDTO.setRole(userEntity.getRole());
+        userDTO.setRole(userEntity.getRoles());
         userDTO.setProvider(userEntity.getProvider());
         return userDTO;
     }

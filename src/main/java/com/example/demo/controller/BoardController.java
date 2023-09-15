@@ -2,15 +2,24 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.dto.CommentDTO;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +31,30 @@ import java.util.List;
 @Controller
 @RequestMapping("/board")
 @RequiredArgsConstructor
+@Slf4j
 public class BoardController {
     private final BoardService boardService;
     private final CommentService commentService;
 
     @GetMapping("/save")
-    public String saveForm(){
+    public String saveForm(@AuthenticationPrincipal UserDTO userDTO, Model model){
+
+        System.out.println("userDTO = " + userDTO);
+        model.addAttribute("user",userDTO);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String username = userDetails.getUsername();
+        String password = userDetails.getPassword();
+        System.out.println("username = " + username);
+        System.out.println("password = " + password);
+
+
+
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        Authentication authentication =
+                new TestingAuthenticationToken("username", "password", "ROLE_USER");
+        context.setAuthentication(authentication);
 
         return "save";
     }
@@ -35,6 +62,9 @@ public class BoardController {
 
     @GetMapping("/reply")
     public String saveForm(@RequestParam ("id") Long id, Model model){
+
+
+
 
         if(id != null){
         model.addAttribute("id", id);}
@@ -78,8 +108,10 @@ public class BoardController {
 
         }
 
-        return "index";
+        return "redirect:/board/paging";
     }
+
+
 
     @GetMapping("/list")
 
@@ -157,7 +189,9 @@ public class BoardController {
 
     }
 
-
-
+    @PostMapping("/test")
+    public ResponseEntity<String> forTest(){
+        return ResponseEntity.ok().body("리뷰 등록이 완료되었습니다.");
+    }
 
 }//end class

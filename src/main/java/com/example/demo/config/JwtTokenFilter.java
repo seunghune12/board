@@ -11,7 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +22,12 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
-public class JwtTFilter extends OncePerRequestFilter {
+public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final UserService userService;
     private final String secretKey;
 
+    //계층 추가하여 권한 부여
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
@@ -42,7 +42,7 @@ public class JwtTFilter extends OncePerRequestFilter {
         }
 
 //     Token꺼내기
-        String token = authorization.split("")[1];
+        String token = authorization.split(" ")[1];
 
 //        Token Expired 되었는지 여부
         if(JwtTokenUtil.isExpired(token, secretKey)){
@@ -52,8 +52,9 @@ public class JwtTFilter extends OncePerRequestFilter {
         }
 
         //    UserName Token에서 꺼내기
-        String userName = "";
-//        String userName = JwtTokenUtil.getUserName(token, secretKey);
+//        String userName = "";
+        String userName = JwtTokenUtil.getUserName(token, secretKey);
+        log.info("userName:{}", userName);
 
         //        권한 부여
         UsernamePasswordAuthenticationToken authenticationToken =

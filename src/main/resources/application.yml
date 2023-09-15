@@ -18,6 +18,10 @@ spring:
             scope:
               - email
               - profile
+
+
+
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8

@@ -14,8 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BoardDTO {
         private Long id;
-        private UserEntity user;
-        private String boardPass;
+        private String username;
         private String boardTitle;
         private String boardContents;
         private int boardHits;
@@ -25,17 +24,18 @@ public class BoardDTO {
         private String originalFileName;
         private String storedFileName;
         private int fileAttached;//파일 첨부 여부(첨부 1, 미첨부 0)
+        private String boardPass;
         private Long grp;
         private Long seq;
         private Long dep; //계층형 게시판 : 글 그룹 / 글 순서 / 글 깊이
         private Long like;
         private Long dislike;
-        private String boardWriter;
+
 
         public static BoardDTO toBoardDTO(BoardEntity boardEntity){
                 BoardDTO boardDTO = new BoardDTO();
                 boardDTO.setId(boardEntity.getId());
-                boardDTO.setUser(boardEntity.getUser());
+                boardDTO.setUsername(boardEntity.getUsername());
                 boardDTO.setBoardPass(boardEntity.getBoardPass());
                 boardDTO.setBoardTitle(boardEntity.getBoardTitle());
                 boardDTO.setBoardContents(boardEntity.getBoardContents());
@@ -61,9 +61,9 @@ public class BoardDTO {
                 return boardDTO;
         }
 
-        public BoardDTO(Long id, UserEntity user, String boardTitle, int boardHits, LocalDateTime boardCreatedTime, Long grp, Long seq, Long dep, Long like, Long dislike) {
+        public BoardDTO(Long id, String username, String boardTitle, int boardHits, LocalDateTime boardCreatedTime, Long grp, Long seq, Long dep, Long like, Long dislike) {
                 this.id = id;
-                this.user = user;
+                this.username = username;
                 this.boardTitle = boardTitle;
                 this.boardHits = boardHits;
                 this.boardCreatedTime = boardCreatedTime;

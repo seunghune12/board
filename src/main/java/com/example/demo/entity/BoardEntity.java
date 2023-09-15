@@ -19,15 +19,8 @@ public class BoardEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
-
-    private String boardWriter;
-
-
     @Column
-    private String boardPass;
+    private String username;
 
     @Column
     private String boardTitle;
@@ -40,6 +33,8 @@ public class BoardEntity extends BaseEntity {
 
     @Column
     private int fileAttached;
+    @Column
+    private String boardPass;
 
     @Column
     private Long grp;
@@ -66,7 +61,7 @@ public class BoardEntity extends BaseEntity {
 
     public static BoardEntity toSaveEntity(BoardDTO boardDTO){
         BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setUser(boardDTO.getUser());
+        boardEntity.setUsername(boardDTO.getUsername());
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardContents(boardDTO.getBoardContents());
@@ -84,7 +79,7 @@ public class BoardEntity extends BaseEntity {
     public static BoardEntity toUpdateEntity(BoardDTO boardDTO){
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setId(boardDTO.getId());
-        boardEntity.setUser(boardDTO.getUser());
+        boardEntity.setUsername(boardDTO.getUsername());
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardContents(boardDTO.getBoardContents());
@@ -98,7 +93,7 @@ public class BoardEntity extends BaseEntity {
 
     public static BoardEntity toSaveFileEntity(BoardDTO boardDTO){
         BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setUser(boardDTO.getUser());
+        boardEntity.setUsername(boardDTO.getUsername());
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardContents(boardDTO.getBoardContents());

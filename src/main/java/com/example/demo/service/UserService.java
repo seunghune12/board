@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.Repository.UserRepository;
+import com.example.demo.dto.SignUpResultDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.exception.AppException;
@@ -46,20 +47,31 @@ public class UserService {
         return userEntity;
     }
 
-    public String login(UserDTO userDTO) {
-//        userName 없음
-        Optional<UserEntity> userOptional = Optional.ofNullable(userRepository.findByUsername(userDTO.getUsername()));
+    public UserEntity login(UserDTO userDTO) {
+        UserEntity user = userRepository.findByUsername(userDTO.getUsername());
 
-        if (!userOptional.isPresent()) {
-            throw new AppException(ErrorCode.USERNAME_NOT_FOUND, userDTO.getUsername() + "이 없습니다");
+        //패스워드 비교
+        if(!bCryptPasswordEncoder.matches(userDTO.getPassword(),user.getPassword())){
+            throw new RuntimeException();
         }
 
-        UserEntity selectedUser = userOptional.get();
-//        password 틀림
-        if(!bCryptPasswordEncoder.matches(userDTO.getPassword(), selectedUser.getPassword()))
-            throw new AppException(ErrorCode.INVALID_PASSWORD, "패스워드를 잘못 입력 했습니다");
-//  `   앞에서 Excetion이 안 났으면 토큰 발행
-        String token = JwtTokenUtil.createToken(userDTO.getUsername(), key, expireTimeMs);
-        return token;
+        return user;
+
     }
+
+
+
+//    // 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
+//    private void setSuccessResult(SignUpResultDTO result) {
+//        result.setSuccess(true);
+//        result.setCode(CommonResponse.SUCCESS.getCode());
+//        result.setMsg(CommonResponse.SUCCESS.getMsg());
+//    }
+//
+//    // 결과 모델에 api 요청 실패 데이터를 세팅해주는 메소드
+//    private void setFailResult(SignUpResultDTO result) {
+//        result.setSuccess(false);
+//        result.setCode(CommonResponse.FAIL.getCode());
+//        result.setMsg(CommonResponse.FAIL.getMsg());
+//    }
 }

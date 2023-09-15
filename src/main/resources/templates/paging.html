@@ -17,13 +17,14 @@
   <tr>
     <th>id</th>
     <th>title</th>
-    <th>writer</th>
     <th>date</th>
     <th>hits</th>
     <th>grp</th>
     <th>seq</th>
     <th>dep</th>
   </tr>
+
+
   <tr th:each="board: ${boardList}">
     <td th:text="${board.id}"></td>
     <td>
@@ -33,10 +34,12 @@
         </th:block>
         <a th:href="@{|/board/${board.id}|}">RE:<span th:text="${board.boardTitle}"></span></a>
       </th:block>
+
       <th:block th:unless="${board.dep > 0}">
         <a th:href="@{|/board/${board.id}|}"><span th:text="${board.boardTitle}"></span></a>
       </th:block>
     </td>
+
     <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
     <td th:text="${board.boardHits}"></td>
     <td th:text="${board.grp}"></td>

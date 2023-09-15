@@ -1,19 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>로그인 페이지</title>
+    <title>로그인 창</title>
 </head>
+
 <body>
-<h1>로그인 페이지</h1>
-  <hr/>
-  <form action="/login" method="POST">
-    id:       <input type="text" name="username" /> <br/>
-    password: <input type="password" name="password" /> <br/>
-    <button>로그인</button>
-  </form>
-  <button onclick="googleReq()">구글로그인</button>
-  <button onclick="joinReq()">회원가입</button>
+    <h1>로그인 해 주세요</h1>
+    <div th:if="${param.error}">
+        Invalid username and password.</div>
+    <div th:if="${param.logout}">
+        You have been logged out.</div>
+    <form th:action="@{/login}" method="post">
+        <div>
+            <input type="text" name="username" placeholder="Username"/>
+        </div>
+        <div>
+            <input type="password" name="password" placeholder="Password"/>
+        </div>
+        <button>로그인</button>
+    </form>
+    <button onclick="googleReq()">구글로그인</button>
+    <button onclick="joinReq()">회원가입</button>
+
+</body>
+
 
 
 </body>
